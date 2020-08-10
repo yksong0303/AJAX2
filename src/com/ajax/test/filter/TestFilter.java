@@ -1,5 +1,6 @@
 package com.ajax.test.filter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.Filter;
