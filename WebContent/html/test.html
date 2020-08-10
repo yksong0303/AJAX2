@@ -19,7 +19,12 @@ function getTestList(){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4){
-			document.querySelector('#rDiv').innerText = '결과 : ' + xhr.responseText;
+			if(xhr.status==200){
+				document.querySelector('#rDiv').innerText = '결과 : ' + xhr.responseText;
+			}else{
+				alert('뭔지 몰라도 에러남');
+				console.log(xhr.response);
+			}
 		}
 	}
 	xhr.send();
