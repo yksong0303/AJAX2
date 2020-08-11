@@ -2,6 +2,8 @@ package com.ajax.test.servlet;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -15,7 +17,10 @@ import org.apache.tomcat.dbcp.dbcp2.PoolableConnectionFactory;
 import org.apache.tomcat.dbcp.dbcp2.PoolingDriver;
 import org.apache.tomcat.dbcp.pool2.impl.GenericObjectPool;
 import org.apache.tomcat.dbcp.pool2.impl.GenericObjectPoolConfig;
-
+/*
+ * dbcp2 : Database connection pooling
+ * HikariCP : Hikari Connection Pooling
+ */
 @WebServlet(loadOnStartup = 1)
 public class InitServlet extends HttpServlet {
 	private static final long serialVersionUID = -2273647679784828245L;
@@ -63,10 +68,14 @@ public class InitServlet extends HttpServlet {
 		}
 	}
 
-	public static final Connection getConnection() throws Exception {
+	public static final Connection getConnection() {
 		String jdbcDriver = "jdbc:apache:commons:dbcp:jwc";
-		return DriverManager.getConnection(jdbcDriver);
-
+		try {
+			return DriverManager.getConnection(jdbcDriver);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static void main(String[] args) {
@@ -92,5 +101,15 @@ public class InitServlet extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	public static void close(PreparedStatement ps, Connection conn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void close(ResultSet rs, PreparedStatement ps, Connection conn) {
+		// TODO Auto-generated method stub
+		
 	}
 }
