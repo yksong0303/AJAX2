@@ -22,7 +22,6 @@ public class UserServlet extends HttpServlet {
 	private UserService us = new UserServiceImpl();
 	private Gson gson = new Gson();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -50,6 +49,29 @@ public class UserServlet extends HttpServlet {
 			Map<String,String> rMap = new HashMap<>();
 			rMap.put("msg", "로그아웃 되었습니다.");
 			response.getWriter().append(gson.toJson(rMap));
+		}else if("join".equals(cmd)) {
+			String uiId = request.getParameter("ui_id");
+			if(uiId==null || uiId.trim().length()<4) {
+				throw new ServletException("올바르지 않은 아이디값!");
+			}
+			String uiPwd = request.getParameter("ui_pwd");
+			String uiName = request.getParameter("ui_name");
+			String uiAge = request.getParameter("ui_age");
+			String uiBirth = request.getParameter("ui_birth");
+			String uiPhone = request.getParameter("ui_phone");
+			String uiEmail = request.getParameter("ui_email");
+			String uiNickname = request.getParameter("ui_nickname");
+			Map<String,Object> user = new HashMap<>();
+			user.put("ui_id", uiId);
+			user.put("ui_pwd", uiPwd);
+			user.put("ui_name", uiName);
+			user.put("ui_age", uiAge);
+			user.put("ui_birth", uiBirth);
+			user.put("ui_phone", uiPhone);
+			user.put("ui_email", uiEmail);
+			user.put("ui_nickname", uiNickname);
+			Map<String,Object> rMap = us.joinUserInfo(user);
+			request.setAttribute("rMap", rMap);
 		}
 	}
 }

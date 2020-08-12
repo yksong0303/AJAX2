@@ -134,7 +134,6 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 
 	@Override
 	public Map<String, Object> selectUserInfo(Map<String, Object> uMap) {
-		List<Map<String, Object>> rList = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -145,6 +144,40 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, Integer.parseInt(uMap.get("ui_num").toString()));
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				ui.put("ui_num", rs.getInt("ui_num"));
+				ui.put("ui_name", rs.getString("ui_name"));
+				ui.put("ui_age", rs.getInt("ui_age"));
+				ui.put("ui_birth", rs.getString("ui_birth"));
+				ui.put("ui_id", rs.getString("ui_id"));
+				ui.put("ui_password", rs.getString("ui_password"));
+				ui.put("ui_phone", rs.getString("ui_phone"));
+				ui.put("ui_email", rs.getString("ui_email"));
+				ui.put("ui_credat", rs.getString("ui_credat"));
+				ui.put("ui_nickname", rs.getString("ui_nickname"));
+			}
+			return ui;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			InitServlet.close(rs, ps, conn);
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> selectUserInfoByUiId(String uiId) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Map<String, Object> ui = new HashMap<>();
+		conn = InitServlet.getConnection();
+		String sql = "select ui_num, ui_name, ui_age, ui_birth, ui_id, ui_password, ui_phone,"
+				+ " ui_email, ui_credat, ui_nickname from user_info where ui_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, uiId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				ui.put("ui_num", rs.getInt("ui_num"));
