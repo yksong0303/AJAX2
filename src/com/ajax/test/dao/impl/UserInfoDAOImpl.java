@@ -28,13 +28,12 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 			ps.setInt(2, Integer.parseInt(uMap.get("ui_age").toString()));
 			ps.setString(3, uMap.get("ui_birth").toString());
 			ps.setString(4, uMap.get("ui_id").toString());
-			ps.setString(5, uMap.get("ui_password").toString());
+			ps.setString(5, uMap.get("ui_pwd").toString());
 			ps.setString(6, uMap.get("ui_phone").toString());
 			ps.setString(7, uMap.get("ui_email").toString());
 			ps.setString(8, uMap.get("ui_nickname").toString());
 			result = ps.executeUpdate();
 			conn.commit();
-			
 			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -190,8 +189,8 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 				ui.put("ui_email", rs.getString("ui_email"));
 				ui.put("ui_credat", rs.getString("ui_credat"));
 				ui.put("ui_nickname", rs.getString("ui_nickname"));
-			}
-			return ui;
+				return ui;
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -201,3 +200,5 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}	
 
 }
+
+

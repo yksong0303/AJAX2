@@ -37,4 +37,16 @@ public class UserServiceImpl implements UserService{
 		return rMap;
 	}
 
+	@Override
+	public Map<String, String> checkId(String uiId) {
+		Map<String, String> rMap = new HashMap<>();
+		rMap.put("msg", "이미 있는 아이디입니다.");
+		rMap.put("result", "false");
+		if(uiDao.selectUserInfoByUiId(uiId)==null) {
+			rMap.put("msg", "가입이 가능한 아이디입니다.");
+			rMap.put("result", "true");
+		}
+		return rMap;
+	}
+
 }

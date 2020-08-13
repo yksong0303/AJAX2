@@ -2,6 +2,7 @@ package com.ajax.test.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,15 @@ public class UserServlet extends HttpServlet {
 	private UserService us = new UserServiceImpl();
 	private Gson gson = new Gson();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int idx = request.getRequestURI().lastIndexOf("/")+1;
+		String cmd = request.getRequestURI().substring(idx);
+		PrintWriter pw = response.getWriter();
+		if("checkid".equals(cmd)) {
+			String uiId = request.getParameter("ui_id");
+			Map<String,String> rMap = us.checkId(uiId);
+			pw.println(gson.toJson(rMap));
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,6 +67,7 @@ public class UserServlet extends HttpServlet {
 			String uiName = request.getParameter("ui_name");
 			String uiAge = request.getParameter("ui_age");
 			String uiBirth = request.getParameter("ui_birth");
+			uiBirth = uiBirth.replace("-", "");
 			String uiPhone = request.getParameter("ui_phone");
 			String uiEmail = request.getParameter("ui_email");
 			String uiNickname = request.getParameter("ui_nickname");

@@ -26,20 +26,15 @@ public class InitServlet extends HttpServlet {
 	private static final String DRIVER_NAME = "oracle.jdbc.OracleDriver";
 
 	public void init() {
-		initDriverClassName();
 		initDBCP2();
-		System.out.println("로드 완료");
 	}
 
-	private void initDriverClassName() {
+	private void initDBCP2() {
 		try {
 			Class.forName(DRIVER_NAME);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void initDBCP2() {
 		ConnectionFactory cf = new DriverManagerConnectionFactory(URL, ID, PWD);
 		PoolableConnectionFactory pcf = new PoolableConnectionFactory(cf, null);
 		GenericObjectPoolConfig<PoolableConnection> gopc = new GenericObjectPoolConfig<>();
