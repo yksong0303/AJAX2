@@ -25,8 +25,8 @@ function doLogin(){
 	var id = document.querySelector('#id').value;
 	var pwd = document.querySelector('#pwd').value;
 	var params = {
-			id : document.querySelector('#id').value,
-			pwd : document.querySelector('#pwd').value
+			ui_id : document.querySelector('#id').value,
+			ui_password : document.querySelector('#pwd').value
 	}
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST','/user/login');

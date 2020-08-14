@@ -10,7 +10,7 @@
 <body>
 	ajax index화면<br>
 <c:if test="${sessionScope.id == null}">
-<a href="/views/login"><button>로그인</button></a>
+<a href="/views/user/login"><button>로그인</button></a>
 </c:if>
 <c:if test="${sessionScope.id != null}">
 <button onclick="doLogout()">로그아웃</button> 
