@@ -22,7 +22,7 @@ public class ViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		List<String> strList = new ArrayList<>();
-		strList.add("1");
+		strList.add("12");
 		strList.add("2");
 		strList.add("3");
 		strList.add("4");
