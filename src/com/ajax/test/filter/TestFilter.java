@@ -23,12 +23,12 @@ public class TestFilter implements Filter {
 			String ext = url.substring(idx+1,url.length());
 			if("html".equals(ext)) {
 				chain.doFilter(request, response);
-				return;
 			}
+		}else {
+			response.setContentType("text/html;charset=utf-8");
+			request.setCharacterEncoding("utf-8");
+			chain.doFilter(request, response);
 		}
-		response.setContentType("text/html;charset=utf-8");
-		request.setCharacterEncoding("utf-8");
-		chain.doFilter(request, response);
 	}
 	public void init(FilterConfig fConfig) throws ServletException {
 	}

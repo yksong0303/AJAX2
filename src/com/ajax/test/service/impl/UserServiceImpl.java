@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ajax.test.dao.UserInfoDAO;
 import com.ajax.test.dao.impl.UserInfoDAOImpl;
+import com.ajax.test.exception.BizException;
 import com.ajax.test.service.UserService;
 
 public class UserServiceImpl implements UserService{
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Map<String, Object> joinUserInfo(Map<String, Object> user) {
+		
 		int result = uiDao.insertUserInfo(user);
 		Map<String, Object> rMap = new HashMap<>();
 		rMap.put("result", result);

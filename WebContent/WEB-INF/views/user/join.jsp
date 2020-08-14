@@ -9,11 +9,10 @@
 <body>
 <script>
 var isChecked = false;
+var isChecking = false;
+var intervalObj;
 function checkValue(formObj){
-	if(!isChecked){
-		alert('중복확인을 눌러주세요');
-		return false;
-	}
+	
 	var uiId = document.querySelector('#ui_id');
 	if(uiId.value.trim().length<4){
 		alert('아이디를 확인해주세요.');
@@ -51,7 +50,13 @@ function checkValue(formObj){
 		return false;
 	}
 }
-function checkId(){
+function checkIdAjax(){
+	if(isChecking){
+		clearInterval(intervalObj);
+		isChecking = false;
+		return;
+	}
+	isChecking = true;
 	var id = document.querySelector('#ui_id').value;
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET','/user/checkid?ui_id=' + id);
@@ -59,7 +64,7 @@ function checkId(){
 		if(xhr.readyState==4){
 			if(xhr.status==200){
 				var res = JSON.parse(xhr.responseText);
-				alert(res.msg);
+				document.querySelector('#rDiv').innerText = res.msg;
 				if(res.result=='true'){
 					isChecked = true;
 				}
@@ -68,10 +73,19 @@ function checkId(){
 	}
 	xhr.send();
 }
+function checkId(interval){
+	if(!interval){
+		interval = 0;
+	}
+	if(!isChecking){
+		intervalObj = setInterval(checkIdAjax,interval);
+	}
+}
 </script>
 <form action="/user/join" method="post" onsubmit="return checkValue(this)">
-	ID : <input type="text" name="ui_id" id="ui_id" onchange="isChecked = false;"> 
+	ID : <input type="text" name="ui_id" id="ui_id" onchange="isChecked = false;" onkeyup="checkId(1000)"> 
 	<button type="button" onclick="checkId()">중복확인</button><br>
+	<div id="rDiv"></div>
 	PWD : <input type="password" name="ui_pwd" id="ui_pwd"><br>
 	이름 : <input type="text" name="ui_name" id="ui_name"><br>
 	age : <input type="number" name="ui_age" id="ui_age"><br>
